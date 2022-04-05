@@ -9,12 +9,20 @@ roteador.get('./api/rotas/fornecedores', async(requisicao, resposta) => {
 })
 
 roteador.post('./api/rotas/fornecedores', async (requisicao,resposta) => {
-    const dadosRecebidos = requisicao.body
-    const fornecedor = new Fornecedor(dadosRecebidos)
-    await fornecedor.criar()
-    resposta.send (
+    try {
+        const dadosRecebidos = requisicao.body
+        const fornecedor = new Fornecedor(dadosRecebidos)
+        await fornecedor.criar()
+        resposta.send (
         JSON.stringify(fornecedor)
     )
+    } catch (erro){
+        resposta.send(
+            JSON.stringify({
+                mensagem: erro.message
+            })
+        )
+    }
 } )
 
 roteador.get('/:idFornecedor', async (requisicao,resposta) => {
@@ -53,6 +61,20 @@ roteador.put('/:idFornecedor', async (requisicao,resposta) => {
     }
 })
 
-
+roteador.delete('/:idFornecedor', async (requisicao,resposta) => {
+    try{
+        const id = requisicao.params.idFornecedor
+        const fornecedor = new Fornecedor({id :id})
+        await fornecedor.carregar()
+        await fornecedor.remover()
+        resposta.end()
+    } catch {
+        resposta.send(
+            JSON.stringify({
+                mensagem: erro.message
+            })
+        )
+    }
+})
 
 module.exports = roteador
