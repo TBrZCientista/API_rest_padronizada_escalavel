@@ -1,7 +1,7 @@
 const express = require ('express')
 const app = express()
 const bodyParser = require ('body-parser')
-const config = require('../config')
+const config = require('config')
 const NaoEncontrado = require('./erros/NaoEncontrado')
 const CampoInvalido = require('./erros/CampoInvalido')
 const DadosNaoFornecidos = require('./erros/DadosNaoFornecidos')
@@ -60,4 +60,4 @@ app.use((erro,requisicao, resposta,proximo)=> {
     )
 })
 
-app.listen(config.api.porta, () => console.log('A API está funcionando!!!'))
+app.listen(config.get('api.porta'), () => console.log('A API está funcionando!!!'))
