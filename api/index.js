@@ -1,7 +1,7 @@
 const express = require ('express')
 const app = express()
 const bodyParser = require ('body-parser')
-const config = require('../config/defaut.json')
+const config = require('../config')
 const NaoEncontrado = require('./erros/NaoEncontrado')
 const CampoInvalido = require('./erros/CampoInvalido')
 const DadosNaoFornecidos = require('./erros/DadosNaoFornecidos')
@@ -29,7 +29,7 @@ app.use((requisicao, resposta, proximo) => {
 })
 
 const roteador = require('./rotas/fornecedores')
-const NaoEncontrado = require('./erros/NaoEncontrado')
+
 app.use ('./api/rotas/fornecedores', roteador) 
 
 app.use((erro,requisicao, resposta,proximo)=> {
